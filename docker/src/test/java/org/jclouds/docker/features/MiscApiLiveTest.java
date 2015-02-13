@@ -16,15 +16,15 @@
  */
 package org.jclouds.docker.features;
 
-import org.jclouds.docker.compute.BaseDockerApiLiveTest;
-import org.jclouds.docker.options.BuildOptions;
-import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+
+import org.jclouds.docker.compute.BaseDockerApiLiveTest;
+import org.jclouds.docker.options.BuildOptions;
+import org.testng.annotations.Test;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
@@ -32,11 +32,11 @@ import com.google.common.collect.Iterables;
 @Test(groups = "live", testName = "MiscApiLiveTest", singleThreaded = true)
 public class MiscApiLiveTest extends BaseDockerApiLiveTest {
 
-   private static final String API_VERSION = "1.16";
-   private static final String VERSION = "1.4.1";
-   private static final String GIT_COMMIT = "5bc2ff8";
-   private static final String GO_VERSION = "go1.3.3";
-   private static final String KERNEL_VERSION = "3.16.7-tinycore64";
+   private static final String API_VERSION = "1.17";
+   private static final String VERSION = "1.5.0";
+   private static final String GIT_COMMIT = "a8a31ef";
+   private static final String GO_VERSION = "go1.4.1";
+   private static final String KERNEL_VERSION = "3.18.5-tinycore64";
    private static final String ARCH = "amd64";
    private static final String OS = "linux";
 

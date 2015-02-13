@@ -17,12 +17,11 @@
 package org.jclouds.docker.features;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -128,7 +127,7 @@ public class ContainerApiLiveTest extends BaseDockerApiLiveTest {
    @Test(dependsOnMethods = "testRestartContainer")
    public void testWaitContainer() {
       api().stopContainer(container.id(), 1);
-      assertEquals(api().wait(container.id()).statusCode(), -1);
+      assertNotEquals(api().wait(container.id()).statusCode(), 0);
    }
 
    @Test(dependsOnMethods = "testWaitContainer")
