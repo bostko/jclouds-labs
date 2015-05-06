@@ -18,6 +18,7 @@ package org.jclouds.docker.config;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.net.ssl.SSLContext;
 
 import org.jclouds.docker.suppliers.SSLContextWithKeysSupplier;
 import org.jclouds.http.okhttp.OkHttpClientSupplier;
@@ -44,7 +45,10 @@ public class DockerOkHttpClientSupplier implements OkHttpClientSupplier {
               .tlsVersions(TlsVersion.TLS_1_0, TlsVersion.TLS_1_1, TlsVersion.TLS_1_2)
               .build();
       client.setConnectionSpecs(ImmutableList.of(modernTLS, ConnectionSpec.CLEARTEXT));
-      client.setSslSocketFactory(sslContextWithKeysSupplier.get().getSocketFactory());
+      SSLContext socketFactory = sslContextWithKeysSupplier.get();
+      if (socketFactory != null) {
+         client.setSslSocketFactory(socketFactory.getSocketFactory());
+      }
       return client;
    }
 

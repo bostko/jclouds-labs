@@ -23,9 +23,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.Socket;
-import java.security.KeyManagementException;
+import java.security.GeneralSecurityException;
 import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
@@ -68,21 +67,20 @@ public class SSLContextWithKeysSupplier implements Supplier<SSLContext> {
    @Override
    public SSLContext get() {
       Credentials currentCreds = checkNotNull(creds.get(), "credential supplier returned null");
-      try {
-         SSLContext sslContext = SSLContext.getInstance("TLS");
-         X509Certificate certificate = getCertificate(loadFile(currentCreds.identity));
-         PrivateKey privateKey = getKey(loadFile(currentCreds.credential));
-         sslContext.init(new KeyManager[]{new InMemoryKeyManager(certificate, privateKey)}, trustManager, new SecureRandom());
-         return sslContext;
-      } catch (NoSuchAlgorithmException e) {
-         throw propagate(e);
-      } catch (KeyManagementException e) {
-         throw propagate(e);
-      } catch (CertificateException e) {
-         throw propagate(e);
-      } catch (IOException e) {
-         throw propagate(e);
+      if (new File(currentCreds.identity).isFile() && new File(currentCreds.credential).isFile()) {
+         try {
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            X509Certificate certificate = getCertificate(loadFile(currentCreds.identity));
+            PrivateKey privateKey = getKey(loadFile(currentCreds.credential));
+            sslContext.init(new KeyManager[]{new InMemoryKeyManager(certificate, privateKey)}, trustManager, new SecureRandom());
+            return sslContext;
+         } catch (GeneralSecurityException e) {
+            throw new AssertionError(); // The system has no TLS. Just give up.
+         } catch (IOException e) {
+            throw propagate(e);
+         }
       }
+      return null; // identity and/or credentials are not files, can't setup sslContext
    }
 
    private static X509Certificate getCertificate(String certificate) {
