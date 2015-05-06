@@ -67,20 +67,17 @@ public class SSLContextWithKeysSupplier implements Supplier<SSLContext> {
    @Override
    public SSLContext get() {
       Credentials currentCreds = checkNotNull(creds.get(), "credential supplier returned null");
-      if (new File(currentCreds.identity).isFile() && new File(currentCreds.credential).isFile()) {
-         try {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            X509Certificate certificate = getCertificate(loadFile(currentCreds.identity));
-            PrivateKey privateKey = getKey(loadFile(currentCreds.credential));
-            sslContext.init(new KeyManager[]{new InMemoryKeyManager(certificate, privateKey)}, trustManager, new SecureRandom());
-            return sslContext;
-         } catch (GeneralSecurityException e) {
-            throw new AssertionError(); // The system has no TLS. Just give up.
-         } catch (IOException e) {
-            throw propagate(e);
-         }
+      try {
+         SSLContext sslContext = SSLContext.getInstance("TLS");
+         X509Certificate certificate = getCertificate(loadFile(currentCreds.identity));
+         PrivateKey privateKey = getKey(loadFile(currentCreds.credential));
+         sslContext.init(new KeyManager[]{new InMemoryKeyManager(certificate, privateKey)}, trustManager, new SecureRandom());
+         return sslContext;
+      } catch (GeneralSecurityException e) {
+         throw propagate(e); // The system has no TLS. Just give up.
+      } catch (IOException e) {
+         throw propagate(e);
       }
-      return null; // identity and/or credentials are not files, can't setup sslContext
    }
 
    private static X509Certificate getCertificate(String certificate) {
