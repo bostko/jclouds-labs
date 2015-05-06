@@ -14,39 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jclouds.docker;
+package org.jclouds.bracket;
+
+import static org.jclouds.compute.config.ComputeServiceProperties.TEMPLATE;
+import static org.jclouds.reflect.Reflection2.typeToken;
+import java.net.URI;
+import java.util.Properties;
+
+import org.jclouds.Constants;
+import org.jclouds.apis.ApiMetadata;
+import org.jclouds.bracket.compute.config.BracketComputeServiceContextModule;
+import org.jclouds.bracket.config.BracketHttpApiModule;
+import org.jclouds.bracket.config.BracketParserModule;
+import org.jclouds.compute.ComputeServiceContext;
+import org.jclouds.compute.config.ComputeServiceProperties;
+import org.jclouds.rest.internal.BaseHttpApiMetadata;
 
 import com.google.auto.service.AutoService;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Module;
-import org.jclouds.Constants;
-import org.jclouds.apis.ApiMetadata;
-import org.jclouds.compute.ComputeServiceContext;
-import org.jclouds.compute.config.ComputeServiceProperties;
-import org.jclouds.docker.compute.config.DockerComputeServiceContextModule;
-import org.jclouds.docker.config.DockerHttpApiModule;
-import org.jclouds.docker.config.DockerParserModule;
-import org.jclouds.rest.internal.BaseHttpApiMetadata;
-
-import java.net.URI;
-import java.util.Properties;
-
-import static org.jclouds.compute.config.ComputeServiceProperties.TEMPLATE;
-import static org.jclouds.reflect.Reflection2.typeToken;
 
 @AutoService(ApiMetadata.class)
-public class DockerApiMetadata extends BaseHttpApiMetadata<DockerApi> {
+public class BracketApiMetadata extends BaseHttpApiMetadata<BracketApi> {
 
    @Override
    public Builder toBuilder() {
       return new Builder().fromApiMetadata(this);
    }
 
-   public DockerApiMetadata() {
+   public BracketApiMetadata() {
       this(new Builder());
    }
 
-   protected DockerApiMetadata(Builder builder) {
+   protected BracketApiMetadata(Builder builder) {
       super(builder);
    }
 
@@ -58,28 +58,29 @@ public class DockerApiMetadata extends BaseHttpApiMetadata<DockerApi> {
       return properties;
    }
 
-   public static class Builder extends BaseHttpApiMetadata.Builder<DockerApi, Builder> {
+   public static class Builder extends BaseHttpApiMetadata.Builder<BracketApi, Builder> {
 
       protected Builder() {
-         super(DockerApi.class);
-         id("docker")
+         super(BracketApi.class);
+         id("bracket")
                  .name("Bracket API")
                  .identityName("Path to certificate .pem file")
                  .credentialName("Password to key .pem file")
-                 .documentation(URI.create("https://docs.docker.com/reference/api/docker_remote_api/"))
-                 .version("1.16")
-                 .defaultEndpoint("https://127.0.0.1:2376")
-                 .defaultProperties(DockerApiMetadata.defaultProperties())
+                 .documentation(URI.create("https://support.brkt.com/entries/102152043-Bracket-Computing-Cell-API-Guide-V1-5-BETA-"))
+                 .version("1")
+                 .defaultEndpoint("https://portal.brkt.com")
+                 .defaultProperties(BracketApiMetadata.defaultProperties())
                  .view(typeToken(ComputeServiceContext.class))
-                 .defaultModules(ImmutableSet.<Class<? extends Module>>of(
-                         DockerParserModule.class,
-                         DockerHttpApiModule.class,
-                         DockerComputeServiceContextModule.class));
+                 .defaultModules(ImmutableSet.<Class<? extends Module>>builder()
+                         .add(BracketHttpApiModule.class)
+                         .add(BracketParserModule.class)
+                         .add(BracketComputeServiceContextModule.class)
+                         .build());
       }
 
       @Override
-      public DockerApiMetadata build() {
-         return new DockerApiMetadata(this);
+      public BracketApiMetadata build() {
+         return new BracketApiMetadata(this);
       }
 
       @Override

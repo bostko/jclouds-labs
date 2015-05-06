@@ -14,9 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jclouds.docker.internal;
+package org.jclouds.bracket.internal;
 
+import static com.google.common.util.concurrent.MoreExecutors.sameThreadExecutor;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.jclouds.Constants.PROPERTY_API_VERSION;
+import static org.jclouds.Constants.PROPERTY_CREDENTIAL;
+import static org.jclouds.Constants.PROPERTY_IDENTITY;
 import static org.jclouds.util.Strings2.toStringAndClose;
 import java.io.IOException;
 import java.util.Properties;
@@ -24,6 +28,9 @@ import java.util.Properties;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
+import org.jclouds.bracket.BracketApiMetadata;
+import org.jclouds.bracket.config.BracketParserModule;
+import org.jclouds.concurrent.config.ExecutorServiceModule;
 import org.jclouds.http.BaseMockWebServerTest;
 import org.jclouds.http.okhttp.config.OkHttpCommandExecutorServiceModule;
 
@@ -36,13 +43,15 @@ import com.squareup.okhttp.mockwebserver.RecordedRequest;
 /**
  * Base class for all Bracket mock tests.
  */
-public class BaseDockerMockTest extends BaseMockWebServerTest {
+public class BaseBracketMockTest extends BaseMockWebServerTest {
 
-   protected static final String API_VERSION = "1.15";
+   protected static final String API_VERSION = new BracketApiMetadata().getVersion();
 
    @Override
    protected void addOverrideProperties(Properties properties) {
-      properties.setProperty("jclouds.api-version", API_VERSION);
+      properties.setProperty(PROPERTY_IDENTITY, "uuid");
+      properties.setProperty(PROPERTY_CREDENTIAL, "apikey");
+      properties.setProperty(PROPERTY_API_VERSION, API_VERSION);
    }
 
    @Override
@@ -64,6 +73,11 @@ public class BaseDockerMockTest extends BaseMockWebServerTest {
       assertThat(request.getPath()).isEqualTo("/v" + API_VERSION + path);
       assertThat(request.getHeader(HttpHeaders.ACCEPT)).isEqualTo(MediaType.APPLICATION_JSON);
       return request;
+   }
+
+   protected Module[] getModules() {
+      return new Module[] { new ExecutorServiceModule(sameThreadExecutor()), BracketTestModule.INSTANCE, new OkHttpCommandExecutorServiceModule(), new
+              BracketParserModule() };
    }
 
 }

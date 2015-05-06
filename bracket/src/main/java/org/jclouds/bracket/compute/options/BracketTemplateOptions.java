@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jclouds.docker.compute.options;
+package org.jclouds.bracket.compute.options;
 
 import static com.google.common.base.Objects.equal;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -34,18 +34,18 @@ import com.google.common.collect.ImmutableMap;
 /**
  * Contains options supported in the {@code ComputeService#runNode} operation on the
  * "docker" provider. <h2>Usage</h2> The recommended way to instantiate a
- * DockerTemplateOptions object is to statically import DockerTemplateOptions.* and invoke a static
+ * BracketTemplateOptions object is to statically import BracketTemplateOptions.* and invoke a static
  * creation method followed by an instance mutator (if needed):
  * <p/>
  * <code>
- * import static org.jclouds.docker.compute.options.DockerTemplateOptions.Builder.*;
+ * import static BracketTemplateOptions.Builder.*;
  * <p/>
  * ComputeService api = // get connection
  * templateBuilder.options(inboundPorts(22, 80, 8080, 443));
  * Set<? extends NodeMetadata> set = api.createNodesInGroup(tag, 2, templateBuilder.build());
  * <code>
  */
-public class DockerTemplateOptions extends TemplateOptions implements Cloneable {
+public class BracketTemplateOptions extends TemplateOptions implements Cloneable {
 
    protected Optional<String> dns = Optional.absent();
    protected Optional<String> hostname = Optional.absent();
@@ -57,8 +57,8 @@ public class DockerTemplateOptions extends TemplateOptions implements Cloneable 
    protected Optional<Map<Integer, Integer>> portBindings = Optional.absent();
 
    @Override
-   public DockerTemplateOptions clone() {
-      DockerTemplateOptions options = new DockerTemplateOptions();
+   public BracketTemplateOptions clone() {
+      BracketTemplateOptions options = new BracketTemplateOptions();
       copyTo(options);
       return options;
    }
@@ -66,8 +66,8 @@ public class DockerTemplateOptions extends TemplateOptions implements Cloneable 
    @Override
    public void copyTo(TemplateOptions to) {
       super.copyTo(to);
-      if (to instanceof DockerTemplateOptions) {
-         DockerTemplateOptions eTo = DockerTemplateOptions.class.cast(to);
+      if (to instanceof BracketTemplateOptions) {
+         BracketTemplateOptions eTo = BracketTemplateOptions.class.cast(to);
          if (volumes.isPresent()) {
             eTo.volumes(getVolumes().get());
          }
@@ -101,7 +101,7 @@ public class DockerTemplateOptions extends TemplateOptions implements Cloneable 
          return true;
       if (o == null || getClass() != o.getClass())
          return false;
-      DockerTemplateOptions that = DockerTemplateOptions.class.cast(o);
+      BracketTemplateOptions that = BracketTemplateOptions.class.cast(o);
       return super.equals(that) && equal(this.volumes, that.volumes) &&
               equal(this.hostname, that.hostname) &&
               equal(this.dns, that.dns) &&
@@ -131,60 +131,60 @@ public class DockerTemplateOptions extends TemplateOptions implements Cloneable 
               .toString();
    }
 
-   public DockerTemplateOptions volumes(Map<String, String> volumes) {
+   public BracketTemplateOptions volumes(Map<String, String> volumes) {
       this.volumes = Optional.<Map<String, String>>of(ImmutableMap.copyOf(checkNotNull(volumes, "volumes")));
       return this;
    }
 
-   public DockerTemplateOptions dns(@Nullable String dns) {
+   public BracketTemplateOptions dns(@Nullable String dns) {
       this.dns = Optional.fromNullable(dns);
       return this;
    }
 
-   public DockerTemplateOptions hostname(@Nullable String hostname) {
+   public BracketTemplateOptions hostname(@Nullable String hostname) {
       this.hostname = Optional.fromNullable(hostname);
       return this;
    }
 
-   public DockerTemplateOptions memory(@Nullable Integer memory) {
+   public BracketTemplateOptions memory(@Nullable Integer memory) {
       this.memory = Optional.fromNullable(memory);
       return this;
    }
 
-   public DockerTemplateOptions commands(Iterable<String> commands) {
+   public BracketTemplateOptions commands(Iterable<String> commands) {
       this.commands = Optional.<List<String>>of(ImmutableList.copyOf(checkNotNull(commands, "commands")));
       return this;
    }
 
-   public DockerTemplateOptions commands(String...commands) {
+   public BracketTemplateOptions commands(String...commands) {
       return commands(ImmutableList.copyOf(checkNotNull(commands, "commands")));
    }
 
-   public DockerTemplateOptions cpuShares(@Nullable Integer cpuShares) {
+   public BracketTemplateOptions cpuShares(@Nullable Integer cpuShares) {
       this.cpuShares = Optional.fromNullable(cpuShares);
       return this;
    }
 
-   public DockerTemplateOptions env(Iterable<String> env) {
+   public BracketTemplateOptions env(Iterable<String> env) {
       this.env = Optional.<List<String>>of(ImmutableList.copyOf(checkNotNull(env, "env")));
       return this;
    }
 
-   public DockerTemplateOptions env(String...env) {
+   public BracketTemplateOptions env(String...env) {
       return env(ImmutableList.copyOf(checkNotNull(env, "env")));
    }
 
    /**
     * Set port bindings between the Bracket host and a container.
     * <p>
-    * The {@link Map} keys are host ports number, and the value for an entry is the
+    * The {@link java.util.Map} keys are host ports number, and the value for an entry is the
     * container port number. This is the same order as the arguments for the
     * {@code --publish} command-line option to {@code docker run} which is
     * {@code hostPort:containerPort}.
     *
     * @param portBindings the map of host to container port bindings
     */
-   public DockerTemplateOptions portBindings(Map<Integer, Integer> portBindings) {
+   public BracketTemplateOptions portBindings(Map<Integer, Integer> portBindings) {
       this.portBindings = Optional.<Map<Integer, Integer>>of(ImmutableMap.copyOf(checkNotNull(portBindings, "portBindings")));
       return this;
    }
@@ -208,186 +208,186 @@ public class DockerTemplateOptions extends TemplateOptions implements Cloneable 
    public static class Builder {
 
       /**
-       * @see DockerTemplateOptions#volumes(Map)
+       * @see BracketTemplateOptions#volumes(java.util.Map)
        */
-      public static DockerTemplateOptions volumes(Map<String, String> volumes) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions volumes(Map<String, String> volumes) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.volumes(volumes);
       }
 
       /**
-       * @see DockerTemplateOptions#dns(String)
+       * @see BracketTemplateOptions#dns(String)
        */
-      public static DockerTemplateOptions dns(String dns) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions dns(String dns) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.dns(dns);
       }
 
       /**
-       * @see DockerTemplateOptions#hostname(String)
+       * @see BracketTemplateOptions#hostname(String)
        */
-      public static DockerTemplateOptions hostname(String hostname) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions hostname(String hostname) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.hostname(hostname);
       }
 
       /**
-       * @see DockerTemplateOptions#memory
+       * @see BracketTemplateOptions#memory
        */
-      public static DockerTemplateOptions memory(int memory) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions memory(int memory) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.memory(memory);
       }
 
       /**
-       * @see DockerTemplateOptions#commands(String[])
+       * @see BracketTemplateOptions#commands(String[])
        */
-      public static DockerTemplateOptions commands(String...commands) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions commands(String...commands) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.commands(commands);
       }
 
       /**
-       * @see DockerTemplateOptions#commands(Iterable)
+       * @see BracketTemplateOptions#commands(Iterable)
        */
-      public static DockerTemplateOptions commands(Iterable<String> commands) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
-         return DockerTemplateOptions.class.cast(options.commands(commands));
+      public static BracketTemplateOptions commands(Iterable<String> commands) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
+         return BracketTemplateOptions.class.cast(options.commands(commands));
       }
 
       /**
-       * @see DockerTemplateOptions#cpuShares
+       * @see BracketTemplateOptions#cpuShares
        */
-      public static DockerTemplateOptions cpuShares(int cpuShares) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions cpuShares(int cpuShares) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.cpuShares(cpuShares);
       }
 
       /**
-       * @see DockerTemplateOptions#env(String[])
+       * @see BracketTemplateOptions#env(String[])
        */
-      public static DockerTemplateOptions env(String...env) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
-         return DockerTemplateOptions.class.cast(options.env(env));
+      public static BracketTemplateOptions env(String...env) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
+         return BracketTemplateOptions.class.cast(options.env(env));
       }
 
       /**
-       * @see DockerTemplateOptions#env(Iterable)
+       * @see BracketTemplateOptions#env(Iterable)
        */
-      public static DockerTemplateOptions env(Iterable<String> env) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions env(Iterable<String> env) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.env(env);
       }
 
       /**
-       * @see DockerTemplateOptions#portBindings(Map)
+       * @see BracketTemplateOptions#portBindings(java.util.Map)
        */
-      public static DockerTemplateOptions portBindings(Map<Integer, Integer> portBindings) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions portBindings(Map<Integer, Integer> portBindings) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.portBindings(portBindings);
       }
 
       /**
        * @see TemplateOptions#inboundPorts
        */
-      public static DockerTemplateOptions inboundPorts(int... ports) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions inboundPorts(int... ports) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.inboundPorts(ports);
       }
 
       /**
        * @see TemplateOptions#port
        */
-      public static DockerTemplateOptions blockOnPort(int port, int seconds) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions blockOnPort(int port, int seconds) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.blockOnPort(port, seconds);
       }
 
       /**
        * @see TemplateOptions#installPrivateKey
        */
-      public static DockerTemplateOptions installPrivateKey(String rsaKey) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions installPrivateKey(String rsaKey) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.installPrivateKey(rsaKey);
       }
 
       /**
        * @see TemplateOptions#authorizePublicKey
        */
-      public static DockerTemplateOptions authorizePublicKey(String rsaKey) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions authorizePublicKey(String rsaKey) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.authorizePublicKey(rsaKey);
       }
 
       /**
        * @see TemplateOptions#userMetadata
        */
-      public static DockerTemplateOptions userMetadata(Map<String, String> userMetadata) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions userMetadata(Map<String, String> userMetadata) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.userMetadata(userMetadata);
       }
 
       /**
        * @see TemplateOptions#nodeNames(Iterable)
        */
-      public static DockerTemplateOptions nodeNames(Iterable<String> nodeNames) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions nodeNames(Iterable<String> nodeNames) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.nodeNames(nodeNames);
       }
 
       /**
        * @see TemplateOptions#networks(Iterable)
        */
-      public static DockerTemplateOptions networks(Iterable<String> networks) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions networks(Iterable<String> networks) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.networks(networks);
       }
 
       /**
        * @see TemplateOptions#overrideLoginUser
        */
-      public static DockerTemplateOptions overrideLoginUser(String user) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions overrideLoginUser(String user) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.overrideLoginUser(user);
       }
 
       /**
        * @see TemplateOptions#overrideLoginPassword
        */
-      public static DockerTemplateOptions overrideLoginPassword(String password) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions overrideLoginPassword(String password) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.overrideLoginPassword(password);
       }
 
       /**
        * @see TemplateOptions#overrideLoginPrivateKey
        */
-      public static DockerTemplateOptions overrideLoginPrivateKey(String privateKey) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions overrideLoginPrivateKey(String privateKey) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.overrideLoginPrivateKey(privateKey);
       }
 
       /**
        * @see TemplateOptions#overrideAuthenticateSudo
        */
-      public static DockerTemplateOptions overrideAuthenticateSudo(boolean authenticateSudo) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions overrideAuthenticateSudo(boolean authenticateSudo) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.overrideAuthenticateSudo(authenticateSudo);
       }
 
       /**
        * @see TemplateOptions#overrideLoginCredentials
        */
-      public static DockerTemplateOptions overrideLoginCredentials(LoginCredentials credentials) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions overrideLoginCredentials(LoginCredentials credentials) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.overrideLoginCredentials(credentials);
       }
 
       /**
        * @see TemplateOptions#blockUntilRunning
        */
-      public static DockerTemplateOptions blockUntilRunning(boolean blockUntilRunning) {
-         DockerTemplateOptions options = new DockerTemplateOptions();
+      public static BracketTemplateOptions blockUntilRunning(boolean blockUntilRunning) {
+         BracketTemplateOptions options = new BracketTemplateOptions();
          return options.blockUntilRunning(blockUntilRunning);
       }
 
@@ -399,144 +399,144 @@ public class DockerTemplateOptions extends TemplateOptions implements Cloneable 
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions blockOnPort(int port, int seconds) {
-      return DockerTemplateOptions.class.cast(super.blockOnPort(port, seconds));
+   public BracketTemplateOptions blockOnPort(int port, int seconds) {
+      return BracketTemplateOptions.class.cast(super.blockOnPort(port, seconds));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions inboundPorts(int... ports) {
-      return DockerTemplateOptions.class.cast(super.inboundPorts(ports));
+   public BracketTemplateOptions inboundPorts(int... ports) {
+      return BracketTemplateOptions.class.cast(super.inboundPorts(ports));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions authorizePublicKey(String publicKey) {
-      return DockerTemplateOptions.class.cast(super.authorizePublicKey(publicKey));
+   public BracketTemplateOptions authorizePublicKey(String publicKey) {
+      return BracketTemplateOptions.class.cast(super.authorizePublicKey(publicKey));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions installPrivateKey(String privateKey) {
-      return DockerTemplateOptions.class.cast(super.installPrivateKey(privateKey));
+   public BracketTemplateOptions installPrivateKey(String privateKey) {
+      return BracketTemplateOptions.class.cast(super.installPrivateKey(privateKey));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions blockUntilRunning(boolean blockUntilRunning) {
-      return DockerTemplateOptions.class.cast(super.blockUntilRunning(blockUntilRunning));
+   public BracketTemplateOptions blockUntilRunning(boolean blockUntilRunning) {
+      return BracketTemplateOptions.class.cast(super.blockUntilRunning(blockUntilRunning));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions dontAuthorizePublicKey() {
-      return DockerTemplateOptions.class.cast(super.dontAuthorizePublicKey());
+   public BracketTemplateOptions dontAuthorizePublicKey() {
+      return BracketTemplateOptions.class.cast(super.dontAuthorizePublicKey());
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions nameTask(String name) {
-      return DockerTemplateOptions.class.cast(super.nameTask(name));
+   public BracketTemplateOptions nameTask(String name) {
+      return BracketTemplateOptions.class.cast(super.nameTask(name));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions runAsRoot(boolean runAsRoot) {
-      return DockerTemplateOptions.class.cast(super.runAsRoot(runAsRoot));
+   public BracketTemplateOptions runAsRoot(boolean runAsRoot) {
+      return BracketTemplateOptions.class.cast(super.runAsRoot(runAsRoot));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions runScript(Statement script) {
-      return DockerTemplateOptions.class.cast(super.runScript(script));
+   public BracketTemplateOptions runScript(Statement script) {
+      return BracketTemplateOptions.class.cast(super.runScript(script));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions overrideLoginCredentials(LoginCredentials overridingCredentials) {
-      return DockerTemplateOptions.class.cast(super.overrideLoginCredentials(overridingCredentials));
+   public BracketTemplateOptions overrideLoginCredentials(LoginCredentials overridingCredentials) {
+      return BracketTemplateOptions.class.cast(super.overrideLoginCredentials(overridingCredentials));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions overrideLoginPassword(String password) {
-      return DockerTemplateOptions.class.cast(super.overrideLoginPassword(password));
+   public BracketTemplateOptions overrideLoginPassword(String password) {
+      return BracketTemplateOptions.class.cast(super.overrideLoginPassword(password));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions overrideLoginPrivateKey(String privateKey) {
-      return DockerTemplateOptions.class.cast(super.overrideLoginPrivateKey(privateKey));
+   public BracketTemplateOptions overrideLoginPrivateKey(String privateKey) {
+      return BracketTemplateOptions.class.cast(super.overrideLoginPrivateKey(privateKey));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions overrideLoginUser(String loginUser) {
-      return DockerTemplateOptions.class.cast(super.overrideLoginUser(loginUser));
+   public BracketTemplateOptions overrideLoginUser(String loginUser) {
+      return BracketTemplateOptions.class.cast(super.overrideLoginUser(loginUser));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions overrideAuthenticateSudo(boolean authenticateSudo) {
-      return DockerTemplateOptions.class.cast(super.overrideAuthenticateSudo(authenticateSudo));
+   public BracketTemplateOptions overrideAuthenticateSudo(boolean authenticateSudo) {
+      return BracketTemplateOptions.class.cast(super.overrideAuthenticateSudo(authenticateSudo));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions userMetadata(Map<String, String> userMetadata) {
-      return DockerTemplateOptions.class.cast(super.userMetadata(userMetadata));
+   public BracketTemplateOptions userMetadata(Map<String, String> userMetadata) {
+      return BracketTemplateOptions.class.cast(super.userMetadata(userMetadata));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions userMetadata(String key, String value) {
-      return DockerTemplateOptions.class.cast(super.userMetadata(key, value));
+   public BracketTemplateOptions userMetadata(String key, String value) {
+      return BracketTemplateOptions.class.cast(super.userMetadata(key, value));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions nodeNames(Iterable<String> nodeNames) {
-      return DockerTemplateOptions.class.cast(super.nodeNames(nodeNames));
+   public BracketTemplateOptions nodeNames(Iterable<String> nodeNames) {
+      return BracketTemplateOptions.class.cast(super.nodeNames(nodeNames));
    }
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public DockerTemplateOptions networks(Iterable<String> networks) {
-      return DockerTemplateOptions.class.cast(super.networks(networks));
+   public BracketTemplateOptions networks(Iterable<String> networks) {
+      return BracketTemplateOptions.class.cast(super.networks(networks));
    }
 
 }

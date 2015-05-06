@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jclouds.docker.config;
+package org.jclouds.bracket.config;
 
-import org.jclouds.docker.DockerApi;
-import org.jclouds.docker.handlers.DockerErrorHandler;
+import org.jclouds.bracket.BracketApi;
+import org.jclouds.bracket.handlers.BracketErrorHandler;
 import org.jclouds.http.HttpErrorHandler;
 import org.jclouds.http.annotation.ClientError;
 import org.jclouds.http.annotation.Redirection;
@@ -33,23 +33,21 @@ import org.jclouds.rest.config.HttpApiModule;
  */
 @ConfiguresHttpApi
 @ConfiguresHttpCommandExecutorService
-public class DockerHttpApiModule extends HttpApiModule<DockerApi> {
+public class BracketHttpApiModule extends HttpApiModule<BracketApi> {
 
    @Override
    protected void bindErrorHandlers() {
-      bind(HttpErrorHandler.class).annotatedWith(Redirection.class).to(DockerErrorHandler.class);
-      bind(HttpErrorHandler.class).annotatedWith(ClientError.class).to(DockerErrorHandler.class);
-      bind(HttpErrorHandler.class).annotatedWith(ServerError.class).to(DockerErrorHandler.class);
+      bind(HttpErrorHandler.class).annotatedWith(Redirection.class).to(BracketErrorHandler.class);
+      bind(HttpErrorHandler.class).annotatedWith(ClientError.class).to(BracketErrorHandler.class);
+      bind(HttpErrorHandler.class).annotatedWith(ServerError.class).to(BracketErrorHandler.class);
    }
 
-   /**
-    * This configures SSL certificate authentication when the Bracket daemon is set to use an encrypted TCP socket
-    */
    @Override
    protected void configure() {
       super.configure();
+      install(new BracketParserModule());
       install(new OkHttpCommandExecutorServiceModule());
-      bind(OkHttpClientSupplier.class).to(DockerOkHttpClientSupplier.class);
+      bind(OkHttpClientSupplier.class).to(BracketOkHttpClientSupplier.class);
    }
 
 }

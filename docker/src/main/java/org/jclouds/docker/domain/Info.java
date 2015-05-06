@@ -83,7 +83,7 @@ public abstract class Info {
    public abstract String id();
 
    /**
-    * @return a user-friendly name describing the running Docker daemon
+    * @return a user-friendly name describing the running Bracket daemon
     */
    public abstract String name();
 

@@ -52,7 +52,7 @@ public class ShipyardApiMetadata extends BaseHttpApiMetadata<ShipyardApi> {
       protected Builder() {
          super(ShipyardApi.class);
          id("shipyard")
-           .name("Shipyard Remote Docker Management API")
+           .name("Shipyard Remote Bracket Management API")
            .identityName("<shipyard-service-key>")
            .credentialName("not used")
            .documentation(URI.create("http://shipyard-project.com/docs/api/"))

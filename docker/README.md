@@ -1,4 +1,4 @@
-# Docker as a local cloud provider
+# Bracket as a local cloud provider
 jclouds-docker is a local cloud provider modelled on [docker](http://www.docker.io). Similar to other jclouds supported
 providers, it supports the same portable abstractions offered by jclouds.
 
@@ -6,9 +6,9 @@ providers, it supports the same portable abstractions offered by jclouds.
 
 Please follow these steps to configure your workstation for jclouds-docker:
 
-- install the latest Docker release (please visit https://docs.docker.com/installation/)
+- install the latest Bracket release (please visit https://docs.docker.com/installation/)
 
-If you are using `boot2docker`, notice that from version v1.3.0 the Docker daemon is set to use an encrypted TCP
+If you are using `boot2docker`, notice that from version v1.3.0 the Bracket daemon is set to use an encrypted TCP
 socket (--tls, or --tlsverify),
 then you need to import CA certificate into Trusted Certs:
       
@@ -16,7 +16,7 @@ then you need to import CA certificate into Trusted Certs:
 
 by default the passoword is `changeit`
 
-N.B.: From `Docker 1.3.2+` the server doesn't accept sslv3 protocol (https://github.com/docker/docker/pull/8588/files)
+N.B.: From `Bracket 1.3.2+` the server doesn't accept sslv3 protocol (https://github.com/docker/docker/pull/8588/files)
 
 #How it works
 
@@ -31,7 +31,7 @@ N.B.: From `Docker 1.3.2+` the server doesn't accept sslv3 protocol (https://git
 ##Components
 
 - jclouds \- acts as a java client to access to docker features
-- DOCKER_HOST \- hosts Docker API, NB: jclouds-docker assumes that the latest Docker is installed
+- DOCKER_HOST \- hosts Bracket API, NB: jclouds-docker assumes that the latest Bracket is installed
 - Image \- it is a docker image that can be started.
 - Node \- is a docker container
 

@@ -30,7 +30,7 @@
   <groupId>org.apache.jclouds.labs</groupId>
   <artifactId>docker</artifactId>
   <name>jclouds docker API</name>
-  <description>ComputeService binding to the Docker API</description>
+  <description>ComputeService binding to the Bracket API</description>
   <packaging>bundle</packaging>
 
   <properties>
