@@ -24,6 +24,8 @@ import org.testng.annotations.Test;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 
+import autovalue.shaded.com.google.common.common.collect.ImmutableList;
+
 /**
  * Unit tests for the {@link DockerTemplateOptions} class.
  */
@@ -56,7 +58,7 @@ public class DockerTemplateOptionsTest {
 
    @Test
    public void testDns() {
-      TemplateOptions options = new DockerTemplateOptions().dns("8.8.8.8");
-      assertEquals(options.as(DockerTemplateOptions.class).getDns(), Optional.of("8.8.8.8"));
+      TemplateOptions options = new DockerTemplateOptions().dns(ImmutableList.of("8.8.8.8"));
+      assertEquals(options.as(DockerTemplateOptions.class).getDns(), Optional.of(ImmutableList.of("8.8.8.8")));
    }
 }

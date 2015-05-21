@@ -16,8 +16,12 @@ then you need to import CA certificate into Trusted Certs:
 
 by default the passoword is `changeit`
 
-N.B.: From `Docker 1.3.2+` the server doesn't accept sslv3 protocol (https://github.com/docker/docker/pull/8588/files)
+You may need to remove the `alias` if previously defined:
+      
+      `keytool -delete -alias BOOT2DOCKER -keystore $JAVA_HOME/jre/lib/security/cacerts`
 
+N.B.: From `Docker 1.3.2+` the server doesn't accept sslv3 protocol (https://github.com/docker/docker/pull/8588/files)
+      
 #How it works
 
 
@@ -52,7 +56,7 @@ As jclouds docker support is quite new, issues may occasionally arise. Please fo
 
 1. Remove all containers
 
-    $ docker rm `docker ps -a`
+    $ docker rm -f `docker ps -a`
 
 2. remove all the images
 
