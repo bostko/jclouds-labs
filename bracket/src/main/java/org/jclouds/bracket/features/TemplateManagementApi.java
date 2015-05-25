@@ -26,6 +26,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 import org.jclouds.Fallbacks;
+import org.jclouds.bracket.domain.InstanceTemplate;
 import org.jclouds.bracket.domain.WorkloadTemplate;
 import org.jclouds.bracket.filters.AuthenticationFilter;
 import org.jclouds.rest.annotations.Fallback;
@@ -47,4 +48,8 @@ public interface TemplateManagementApi {
    @Path("/config/workloadtemplate/{modelId}")
    WorkloadTemplate get(@PathParam("modelId") String modelId);
 
+   @Named("workloadtemplate:listInstanceInWorkloadTemplate")
+   @GET
+   @Path("/config/workloadtemplate/{workloadTemplateUUID}/instancetemplate")
+   InstanceTemplate listInstancesInWorkloadTemplate(@PathParam("workloadTemplateUUID") String workloadTemplateUUID);
 }
