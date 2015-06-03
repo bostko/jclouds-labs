@@ -21,6 +21,7 @@ import org.jclouds.bracket.compute.functions.WorkloadTemplateToImage;
 import org.jclouds.bracket.compute.options.BracketTemplateOptions;
 import org.jclouds.bracket.compute.strategy.BracketComputeServiceAdapter;
 import org.jclouds.bracket.domain.ComputeInstance;
+import org.jclouds.bracket.domain.InstanceTemplate;
 import org.jclouds.bracket.domain.WorkloadTemplate;
 import org.jclouds.compute.ComputeServiceAdapter;
 import org.jclouds.compute.config.ComputeServiceAdapterContextModule;
@@ -39,7 +40,7 @@ public class BracketComputeServiceContextModule extends ComputeServiceAdapterCon
    @Override
    protected void configure() {
       super.configure();
-      bind(new TypeLiteral<ComputeServiceAdapter<ComputeInstance, Hardware, WorkloadTemplate, Location>>() {
+      bind(new TypeLiteral<ComputeServiceAdapter<ComputeInstance, Hardware, InstanceTemplate, Location>>() {
       }).to(BracketComputeServiceAdapter.class);
       bind(new TypeLiteral<Function<ComputeInstance, NodeMetadata>>() {
       }).to(ComputeInstanceToNodeMetadata.class);

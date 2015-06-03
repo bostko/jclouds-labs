@@ -31,7 +31,7 @@ public class InstanceTemplateParseTest extends BaseBracketParseTest<InstanceTemp
 
    @Override
    public String resource() {
-      return "/isntancetemplate.json";
+      return "/instancetemplate.json";
    }
 
    @Override
@@ -59,8 +59,8 @@ public class InstanceTemplateParseTest extends BaseBracketParseTest<InstanceTemp
               "", // cloudinit_script
               "CONFIGURED", // cloudinit_type
               "", // cloudinit_config
-              null // cloudinit_data
-              );
+              null, // cloudinit_data
+              1); // min_quantity
    }
 
 }

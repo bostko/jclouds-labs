@@ -18,12 +18,12 @@ package org.jclouds.bracket;
 
 import java.io.Closeable;
 
-import org.jclouds.bracket.features.TemplateManagementApi;
+import org.jclouds.bracket.features.WorkloadTemplateManagementApi;
 import org.jclouds.rest.annotations.Delegate;
 
 public interface BracketApi extends Closeable {
 
    @Delegate
-   TemplateManagementApi getTemplateManagementApi();
+   WorkloadTemplateManagementApi getTemplateManagementApi();
 
 }

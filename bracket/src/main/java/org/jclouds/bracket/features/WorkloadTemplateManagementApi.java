@@ -21,21 +21,26 @@ import java.util.List;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.jclouds.Fallbacks;
 import org.jclouds.bracket.domain.InstanceTemplate;
+import org.jclouds.bracket.domain.Workload;
 import org.jclouds.bracket.domain.WorkloadTemplate;
 import org.jclouds.bracket.filters.AuthenticationFilter;
+import org.jclouds.rest.annotations.BinderParam;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.RequestFilters;
+import org.jclouds.rest.binders.BindToJsonPayload;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/v{jclouds.api-version}/api")
 @RequestFilters(AuthenticationFilter.class)
-public interface TemplateManagementApi {
+public interface WorkloadTemplateManagementApi {
 
    @Named("workloadtemplates:list")
    @GET
@@ -50,6 +55,13 @@ public interface TemplateManagementApi {
 
    @Named("workloadtemplate:listInstanceInWorkloadTemplate")
    @GET
-   @Path("/config/workloadtemplate/{workloadTemplateUUID}/instancetemplate")
-   InstanceTemplate listInstancesInWorkloadTemplate(@PathParam("workloadTemplateUUID") String workloadTemplateUUID);
+   @Path("/config/workloadtemplate/{workloadTemplateUUID}/instancetemplates")
+   List<InstanceTemplate> listInstancesInWorkloadTemplate(@PathParam("workloadTemplateUUID") String workloadTemplateUUID);
+
+
+   @Named("workloadtemplate:deploy")
+   @POST
+   @Path("/config/workloadtemplate/{workloadTemplateUUID}/workloads")
+   List<InstanceTemplate> deploy(@PathParam("workloadTemplateUUID") String workloadTemplateUUID, @QueryParam("name") String name, @BinderParam
+           (BindToJsonPayload.class) Workload workload);
 }

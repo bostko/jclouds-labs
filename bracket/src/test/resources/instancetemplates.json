@@ -1,4 +1,4 @@
-{
+[{
   "assigned_groups": ["90a389a05e904bf5b44079205d92144a"],
   "bracket_volume_templates": "/v1/api/config/instancetemplate/0e19f9450b8e4f6ca0d30029d611e6d7/brktvolumetemplates",
   "cloudinit_config": "",
@@ -8,7 +8,6 @@
   "cloudinit_type": "CONFIGURED",
   "cpu_arch": "amd64",
   "cpu_cores_minimum": 1,
-  "ram_minimum": 1,
   "created_by": "user@example.com",
   "created_time": "2014-07-21T22:55:27.182477+00:00",
   "customer": "2fedd0d2760545169120f53c5c036ff9",
@@ -28,9 +27,10 @@
   "monthly_cost": "88.20",
   "name": "Splunk Master",
   "os_image": "ami-bb4f69fe",
+  "ram_minimum": 1,
   "requires_gpu": False,
   "requires_ssd": False,
   "security_groups": ["0b181ccbf56342b59c41556dc00f0750"],
   "state": "PUBLISHED",
   "workload_template": "f5a645f4b20e49bf9109cc06201d058b"
-}
+}]

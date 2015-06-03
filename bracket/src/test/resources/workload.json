@@ -1,0 +1,29 @@
+{
+  "billing_group": "90a389a05e904bf5b44079205d92144a",
+  "cost": "0.00",
+  "created_by": "user@example.com",
+  "created_time": "2014-07-02T22:16:06.635654+00:00",
+  "customer": "2fedd0d2760545169120f53c5c036ff9",
+  "daily_cost": "2.94",
+  "deleted": False,
+  "description": "",
+  "expired": False,
+  "fixed_charge": "0.00",
+  "hourly_cost": "0.13",
+  "id": "35c43fc788db466883be2cfd592c5f01",
+  "instances": "/v1/api/config/workload/35c43fc788db466883be2cfd592c5f01/instances",
+  "lease_expire_time": "2014-07-05T00:34:03.134000+00:00",
+  "lease_modified_time": "2014-07-02T22:16:06.638958+00:00",
+  "metadata": {
+    "all": {},
+    "resource": {}
+  },
+  "modified_by": "user@example.com",
+  "modified_time": "2014-07-02T22:16:06.635681+00:00",
+  "monthly_cost": "88.20",
+  "name": "Example Workload Name",
+  "requested_state": "AVAILABLE",
+  "state": "READY",
+  "workload_template": "f9af7f2116cc486188ef0cbf18b11775",
+  "zone": "f3372c4a73b04928bd8b73687fcef69c"
+}

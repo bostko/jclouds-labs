@@ -43,7 +43,6 @@ public abstract class WorkloadTemplate {
    public abstract boolean enableServiceDomain();
    public abstract String workloads();
    public abstract List<String> assignedGroups();
-
    @Nullable public abstract Date createdTime();
    @Nullable public abstract Date lastDeployedTime();
 

@@ -33,7 +33,7 @@ public class TemplateManagementApiLiveTest extends BaseBracketApiLiveTest {
       WorkloadTemplate workloadTemplate = api().get("0e443646dc2d4e688f4ab0b27b6c2d5a");
    }
 
-   private TemplateManagementApi api() {
+   private WorkloadTemplateManagementApi api() {
       return api.getTemplateManagementApi();
    }
 

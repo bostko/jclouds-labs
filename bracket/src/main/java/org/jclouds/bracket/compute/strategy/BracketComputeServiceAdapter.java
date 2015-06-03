@@ -17,7 +17,7 @@
 package org.jclouds.bracket.compute.strategy;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import java.util.Set;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -27,6 +27,7 @@ import javax.inject.Singleton;
 import org.jclouds.bracket.BracketApi;
 import org.jclouds.bracket.compute.options.BracketTemplateOptions;
 import org.jclouds.bracket.domain.ComputeInstance;
+import org.jclouds.bracket.domain.InstanceTemplate;
 import org.jclouds.bracket.domain.WorkloadTemplate;
 import org.jclouds.compute.ComputeServiceAdapter;
 import org.jclouds.compute.domain.Hardware;
@@ -35,6 +36,8 @@ import org.jclouds.compute.reference.ComputeServiceConstants;
 import org.jclouds.domain.Location;
 import org.jclouds.logging.Logger;
 
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
@@ -43,7 +46,7 @@ import com.google.common.collect.ImmutableSet;
  * the jclouds {@link org.jclouds.compute.ComputeService}
  */
 @Singleton
-public class BracketComputeServiceAdapter implements ComputeServiceAdapter<ComputeInstance, Hardware, WorkloadTemplate, Location> {
+public class BracketComputeServiceAdapter implements ComputeServiceAdapter<ComputeInstance, Hardware, InstanceTemplate, Location> {
 
    @Resource
    @Named(ComputeServiceConstants.COMPUTE_LOGGER)
@@ -74,13 +77,17 @@ public class BracketComputeServiceAdapter implements ComputeServiceAdapter<Compu
    }
 
    @Override
-   public Set<WorkloadTemplate> listImages() {
-      // TODO
-      return ImmutableSet.of();
+   public List<InstanceTemplate> listImages() {
+      return FluentIterable.from(api.getTemplateManagementApi().list()).transformAndConcat(new Function<WorkloadTemplate, Iterable<InstanceTemplate>>() {
+         @Override
+         public Iterable<InstanceTemplate> apply(WorkloadTemplate input) {
+            return api.getTemplateManagementApi().listInstancesInWorkloadTemplate(input.id());
+         }
+      }).toList();
    }
 
    @Override
-   public WorkloadTemplate getImage(final String imageId) {
+   public InstanceTemplate getImage(final String imageId) {
       return null;
    }
 
