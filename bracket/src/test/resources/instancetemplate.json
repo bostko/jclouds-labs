@@ -9,7 +9,7 @@
   "cpu_arch": "amd64",
   "cpu_cores_minimum": 1,
   "created_by": "user@example.com",
-  "created_time": "2014-07-21T22: 55: 27.182477+00: 00",
+  "created_time": "2014-07-21T22:55:27.182477+00:00",
   "customer": "2fedd0d2760545169120f53c5c036ff9",
   "daily_cost": "2.94",
   "description": "",

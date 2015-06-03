@@ -39,13 +39,11 @@ public abstract class InstanceTemplate {
 
    public abstract String cpuArch();
 
-   public abstract String cpuCoresMinimum();
+   public abstract int cpuCoresMinimum();
 
-   public abstract String ramMinimum();
+   public abstract int ramMinimum();
 
    public abstract String osImage();
-
-   public abstract String cost();
 
    public abstract String hourlyCost();
 
@@ -53,17 +51,15 @@ public abstract class InstanceTemplate {
 
    public abstract String monthlyCost();
 
-   public abstract String baseHourlyRate();
-
    public abstract boolean internetAccessible();
 
    public abstract String workloadTemplate();
 
    public abstract List<String> assignedGroups();
 
-   @Nullable public abstract Date createdTime();
+   public abstract String createdBy();
 
-   @Nullable public abstract Date lastDeployedTime();
+   public abstract Date createdTime();
 
    public abstract String cloudInitId();
 
@@ -73,21 +69,23 @@ public abstract class InstanceTemplate {
 
    public abstract String cloudInitConfig();
 
+   @Nullable
    public abstract String cloudInitData();
 
    InstanceTemplate() {
    }
 
    @SerializedNames({"id", "name", "description", "customer", "state", "cpu_arch", "cpu_cores_minimum", "ram_minimum ", "os_image",
-           "cost", "hourly_cost", "daily_cost", "monthly_cost", "base_hourly_rate", "internet_accessible", "workload_template", "assigned_groups",
-           "created_time", "last_deployed_time", "cloudinit_id", "cloudinit_script", "cloudinit_type", "cloudinit_config", "cloudinit_data"})
-   public static InstanceTemplate create(String id, String name, String description, String customer, String state, String cpuArch, String cpuCoresMinimum, String ramMinum, String osImage,
-                                         String cost, String hourlyCost, String dailyCost, String monthlyCost, String baseHourlyRate, boolean internetAccessible, String workloadTemplate, List<String> assignedGroups,
-                                         Date createdTime, Date lastDeployedTime, String cloudInitId, String cloudInitScript, String cloudInitType, String cloudInitConfig, String cloudInitData) {
+           "hourly_cost", "daily_cost", "monthly_cost", "internet_accessible", "workload_template", "assigned_groups", "created_by",
+           "created_time", "cloudinit_id", "cloudinit_script", "cloudinit_type", "cloudinit_config", "cloudinit_data"})
+   public static InstanceTemplate create(String id, String name, String description, String customer, String state, String cpuArch, int cpuCoresMinimum,
+                                         int ramMinum, String osImage, String hourlyCost, String dailyCost, String monthlyCost, boolean internetAccessible, String workloadTemplate, List<String> assignedGroups,
+                                         String createdBy, Date createdTime, String cloudInitId, String cloudInitScript, String cloudInitType,
+                                         String cloudInitConfig, String cloudInitData) {
       return new AutoValue_InstanceTemplate(
               id, name, description, customer, state, cpuArch, cpuCoresMinimum, ramMinum, osImage,
-              cost, hourlyCost, dailyCost, monthlyCost, baseHourlyRate, internetAccessible, workloadTemplate, copyOf(assignedGroups),
-              createdTime, lastDeployedTime, cloudInitId, cloudInitScript, cloudInitType, cloudInitConfig, cloudInitData);
+              hourlyCost, dailyCost, monthlyCost, internetAccessible, workloadTemplate, copyOf(assignedGroups), createdBy,
+              createdTime, cloudInitId, cloudInitScript, cloudInitType, cloudInitConfig, cloudInitData);
    }
 
 }
