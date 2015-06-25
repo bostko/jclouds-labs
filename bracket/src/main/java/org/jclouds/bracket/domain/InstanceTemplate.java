@@ -58,10 +58,9 @@ public abstract class InstanceTemplate {
    @SerializedNames({"id", "name", "description", "customer", "state", "cpu_arch", "cpu_cores_minimum", "ram_minimum ", "os_image",
            "hourly_cost", "daily_cost", "monthly_cost", "internet_accessible", "workload_template", "assigned_groups", "created_by",
            "created_time", "cloudinit_id", "cloudinit_script", "cloudinit_type", "cloudinit_config", "cloudinit_data", "min_quantity"})
-   public static InstanceTemplate create(String id, String name, String description, String customer, String state, String cpuArch, int cpuCoresMinimum,
-                                         int ramMinimum, String osImage, String hourlyCost, String dailyCost, String monthlyCost, boolean internetAccessible,
-                                         String workloadTemplate, List<String> assignedGroups, String createdBy, Date createdTime, String cloudInitId,
-                                         String cloudInitScript, String cloudInitType, String cloudInitConfig, String cloudInitData, int minQuantity) {
+   public static InstanceTemplate create(String id, String name, String description, String customer, String state, String cpuArch, int cpuCoresMinimum, int ramMinimum, String osImage,
+                                         String hourlyCost, String dailyCost, String monthlyCost, boolean internetAccessible, String workloadTemplate, List<String> assignedGroups, String createdBy,
+                                         Date createdTime, String cloudInitId, String cloudInitScript, String cloudInitType, String cloudInitConfig, String cloudInitData, int minQuantity) {
       return new AutoValue_InstanceTemplate(
               id, name, description, customer, state, cpuArch, cpuCoresMinimum, ramMinimum, osImage,
               hourlyCost, dailyCost, monthlyCost, internetAccessible, workloadTemplate, copyOf(assignedGroups), createdBy,

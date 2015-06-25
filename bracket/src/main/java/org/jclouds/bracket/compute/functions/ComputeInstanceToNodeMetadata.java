@@ -45,8 +45,6 @@ public class ComputeInstanceToNodeMetadata implements Function<ComputeInstance, 
     * started outside jclouds. Client code should check for this value
     * when accessing NodeMetadata from Bracket.
     */
-   public static final Integer NO_LOGIN_PORT = Integer.valueOf(-1);
-
    private final ProviderMetadata providerMetadata;
    private final GroupNamingConvention nodeNamingConvention;
    private final Supplier<Map<String, ? extends Image>> images;
@@ -77,7 +75,8 @@ public class ComputeInstanceToNodeMetadata implements Function<ComputeInstance, 
               //        .ram(computeInstance.config().memory())
               //        .processor(new Processor(computeInstance.config().cpuShares(), computeInstance.config().cpuShares()))
               //        .build());
-      //builder.status(toPortableStatus.apply(computeInstance.state()));
+      // TODO
+      builder.status(NodeMetadata.Status.RUNNING);
       //builder.loginPort(getLoginPort(computeInstance));
       //builder.publicAddresses(getPublicIpAddresses());
       //builder.privateAddresses(getPrivateIpAddresses(computeInstance));

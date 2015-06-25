@@ -22,6 +22,7 @@ import static com.google.common.collect.Iterables.get;
 import javax.annotation.Resource;
 import javax.inject.Named;
 
+import org.jclouds.bracket.domain.InstanceTemplate;
 import org.jclouds.bracket.domain.WorkloadTemplate;
 import org.jclouds.compute.domain.Image;
 import org.jclouds.compute.domain.ImageBuilder;
@@ -33,7 +34,7 @@ import org.jclouds.logging.Logger;
 import com.google.common.base.Function;
 import com.google.common.base.Splitter;
 
-public class WorkloadTemplateToImage implements Function<WorkloadTemplate, Image> {
+public class InstanceTemplateToImage implements Function<InstanceTemplate, Image> {
 
    private static final String CENTOS = "centos";
    private static final String UBUNTU = "ubuntu";
@@ -43,19 +44,20 @@ public class WorkloadTemplateToImage implements Function<WorkloadTemplate, Image
    protected Logger logger = Logger.NULL;
 
    @Override
-   public Image apply(WorkloadTemplate from) {
+   public Image apply(InstanceTemplate from) {
       checkNotNull(from, "image");
 
       String description = from.description();
 
       OsFamily osFamily = osFamily().apply(description);
-      String osVersion = parseVersion(description);
+      // TODO
+      String osVersion = "todo";
 
       OperatingSystem os = OperatingSystem.builder()
               .description(description)
               .family(osFamily)
               .version(osVersion)
-              .is64Bit(is64bit(from))
+              .is64Bit(true)//is64bit(from))
               .build();
 
       return new ImageBuilder()
@@ -89,12 +91,6 @@ public class WorkloadTemplateToImage implements Function<WorkloadTemplate, Image
             return OsFamily.UNRECOGNIZED;
          }
       };
-   }
-
-   private String parseVersion(String description) {
-      String version = get(Splitter.on(":").split(description), 1);
-      logger.debug("os version for item: %s is %s", description, version);
-      return version;
    }
 
 }

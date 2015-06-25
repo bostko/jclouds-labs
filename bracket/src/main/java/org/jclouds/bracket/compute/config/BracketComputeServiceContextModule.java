@@ -17,12 +17,11 @@
 package org.jclouds.bracket.compute.config;
 
 import org.jclouds.bracket.compute.functions.ComputeInstanceToNodeMetadata;
-import org.jclouds.bracket.compute.functions.WorkloadTemplateToImage;
+import org.jclouds.bracket.compute.functions.InstanceTemplateToImage;
 import org.jclouds.bracket.compute.options.BracketTemplateOptions;
 import org.jclouds.bracket.compute.strategy.BracketComputeServiceAdapter;
 import org.jclouds.bracket.domain.ComputeInstance;
 import org.jclouds.bracket.domain.InstanceTemplate;
-import org.jclouds.bracket.domain.WorkloadTemplate;
 import org.jclouds.compute.ComputeServiceAdapter;
 import org.jclouds.compute.config.ComputeServiceAdapterContextModule;
 import org.jclouds.compute.domain.Hardware;
@@ -35,7 +34,7 @@ import org.jclouds.functions.IdentityFunction;
 import com.google.common.base.Function;
 import com.google.inject.TypeLiteral;
 
-public class BracketComputeServiceContextModule extends ComputeServiceAdapterContextModule<ComputeInstance, Hardware, WorkloadTemplate, Location> {
+public class BracketComputeServiceContextModule extends ComputeServiceAdapterContextModule<ComputeInstance, Hardware, InstanceTemplate, Location> {
 
    @Override
    protected void configure() {
@@ -44,8 +43,8 @@ public class BracketComputeServiceContextModule extends ComputeServiceAdapterCon
       }).to(BracketComputeServiceAdapter.class);
       bind(new TypeLiteral<Function<ComputeInstance, NodeMetadata>>() {
       }).to(ComputeInstanceToNodeMetadata.class);
-      bind(new TypeLiteral<Function<WorkloadTemplate, Image>>() {
-      }).to(WorkloadTemplateToImage.class);
+      bind(new TypeLiteral<Function<InstanceTemplate, Image>>() {
+      }).to(InstanceTemplateToImage.class);
       bind(new TypeLiteral<Function<Hardware, Hardware>>() {
       }).to(Class.class.cast(IdentityFunction.class));
       bind(new TypeLiteral<Function<Location, Location>>() {

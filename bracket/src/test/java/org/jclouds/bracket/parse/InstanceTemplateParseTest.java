@@ -59,7 +59,7 @@ public class InstanceTemplateParseTest extends BaseBracketParseTest<InstanceTemp
               "", // cloudinit_script
               "CONFIGURED", // cloudinit_type
               "", // cloudinit_config
-              null, // cloudinit_data
+              "None", // cloudinit_data
               1); // min_quantity
    }
 

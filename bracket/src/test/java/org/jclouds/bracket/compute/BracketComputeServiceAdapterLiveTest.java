@@ -19,6 +19,7 @@ package org.jclouds.bracket.compute;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -26,8 +27,8 @@ import org.jclouds.bracket.BracketApi;
 import org.jclouds.bracket.compute.options.BracketTemplateOptions;
 import org.jclouds.bracket.compute.strategy.BracketComputeServiceAdapter;
 import org.jclouds.bracket.domain.ComputeInstance;
+import org.jclouds.bracket.domain.InstanceTemplate;
 import org.jclouds.compute.ComputeServiceAdapter.NodeAndInitialCredentials;
-import org.jclouds.compute.domain.Hardware;
 import org.jclouds.compute.domain.Template;
 import org.jclouds.compute.domain.TemplateBuilder;
 import org.jclouds.sshj.config.SshjSshClientModule;
@@ -67,11 +68,11 @@ public class BracketComputeServiceAdapterLiveTest extends BaseBracketApiLiveTest
       assertEquals(guest.getNodeId(), guest.getNode().id());
    }
 
-   public void testListHardwareProfiles() {
-      Iterable<Hardware> profiles = adapter.listHardwareProfiles();
-      assertFalse(Iterables.isEmpty(profiles));
+   public void testListImages() {
+      List<InstanceTemplate> images = adapter.listImages();
+      assertFalse(Iterables.isEmpty(images));
 
-      for (Hardware profile : profiles) {
+      for (InstanceTemplate profile : images) {
          assertNotNull(profile);
       }
    }
