@@ -104,7 +104,9 @@ public class DeploymentToNodeMetadata implements Function<Deployment, NodeMetada
       final Set<String> privateIpAddresses = Sets.newLinkedHashSet();
       if (from.roleInstanceList() != null) {
          for (RoleInstance roleInstance : from.roleInstanceList()) {
-            privateIpAddresses.add(roleInstance.ipAddress());
+            if (roleInstance.ipAddress() != null) {
+               privateIpAddresses.add(roleInstance.ipAddress());
+            }
          }
          builder.privateAddresses(privateIpAddresses);
       }

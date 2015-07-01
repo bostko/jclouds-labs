@@ -159,7 +159,7 @@ public class AzureComputeServiceAdapter implements ComputeServiceAdapter<Deploym
                        }
                     });
          }
-      }, 30 * 60, 1, SECONDS).apply(name)) {
+      }, azureComputeConstants.operationTimeout(), 1, SECONDS).apply(name)) {
          logger.warn("Instances %s of %s has not reached the status %s within %sms so it will be destroyed.",
                  Iterables.toString(api.getDeploymentApiForService(name).get(name).roleInstanceList()), name,
                  READY_ROLE, azureComputeConstants.operationTimeout());
@@ -167,7 +167,7 @@ public class AzureComputeServiceAdapter implements ComputeServiceAdapter<Deploym
          api.getCloudServiceApi().delete(name);
          throw new IllegalStateException(format("Deployment %s is being destroyed as its instanceStatus didn't reach "
                  + "status %s after %ss. Please, try by increasing `jclouds.azure.operation-timeout` and "
-                 + " try again", name, READY_ROLE, 30 * 60));
+                 + " try again", name, READY_ROLE, azureComputeConstants.operationTimeout()));
       }
 
       Deployment deployment = api.getDeploymentApiForService(name).get(name);
