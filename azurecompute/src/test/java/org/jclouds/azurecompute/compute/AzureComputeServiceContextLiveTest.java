@@ -28,16 +28,19 @@ import org.jclouds.azurecompute.options.AzureComputeTemplateOptions;
 import org.jclouds.azurecompute.util.ConflictManagementPredicate;
 import org.jclouds.compute.RunNodesException;
 import org.jclouds.compute.domain.ExecResponse;
+import org.jclouds.compute.domain.Image;
 import org.jclouds.compute.domain.NodeMetadata;
 import org.jclouds.compute.domain.Template;
 import org.jclouds.compute.domain.TemplateBuilder;
 import org.jclouds.compute.internal.BaseComputeServiceContextLiveTest;
+import org.jclouds.scriptbuilder.statements.login.AdminAccess;
 import org.jclouds.ssh.SshClient;
 import org.jclouds.sshj.config.SshjSshClientModule;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Module;
@@ -102,18 +105,29 @@ public class AzureComputeServiceContextLiveTest extends BaseComputeServiceContex
    public void testLaunchNode() throws RunNodesException {
       final String groupName = String.format("%s%d-group-acsclt",
               System.getProperty("user.name"),
-              new Random(999).nextInt());
+              new Random().nextInt(999));
 
-      final String name = String.format("%1.5s%dacsclt", System.getProperty("user.name"), new Random(999).nextInt());
+      final String name = String.format("%1.5s%dacsclt", System.getProperty("user.name"), new Random().nextInt(999));
 
+      for (Image image : Iterables.filter(view.getComputeService().listImages(), new Predicate<Image>() {
+         @Override
+         public boolean apply(Image input) {
+            if (input.getLocation() == null) return false;
+            return "North Europe".equals(input.getLocation().getId());
+         }
+      })) {
+         System.out.println(image);
+      }
       final TemplateBuilder templateBuilder = view.getComputeService().templateBuilder();
       templateBuilder.imageId(BaseAzureComputeApiLiveTest.IMAGE_NAME);
       templateBuilder.hardwareId("BASIC_A0");
       templateBuilder.locationId(BaseAzureComputeApiLiveTest.LOCATION);
+
       final Template tmp = templateBuilder.build();
 
       // test passing custom options
       final AzureComputeTemplateOptions options = tmp.getOptions().as(AzureComputeTemplateOptions.class);
+      options.runScript(AdminAccess.standard());
       options.inboundPorts(22);
       options.storageAccountName(getStorageServiceName());
       options.virtualNetworkName(BaseAzureComputeApiLiveTest.VIRTUAL_NETWORK_NAME);

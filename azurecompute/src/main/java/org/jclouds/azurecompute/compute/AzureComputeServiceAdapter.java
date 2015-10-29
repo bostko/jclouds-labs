@@ -20,7 +20,6 @@ import static com.google.common.base.Predicates.notNull;
 import static java.lang.String.format;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.jclouds.util.Predicates2.retry;
-
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
@@ -32,18 +31,19 @@ import javax.inject.Singleton;
 
 import org.jclouds.azurecompute.AzureComputeApi;
 import org.jclouds.azurecompute.compute.config.AzureComputeServiceContextModule.AzureComputeConstants;
+import org.jclouds.azurecompute.compute.functions.OSImageToImage;
 import org.jclouds.azurecompute.config.AzureComputeProperties;
 import org.jclouds.azurecompute.domain.CloudService;
 import org.jclouds.azurecompute.domain.Deployment;
+import org.jclouds.azurecompute.domain.Deployment.RoleInstance;
 import org.jclouds.azurecompute.domain.DeploymentParams;
 import org.jclouds.azurecompute.domain.DeploymentParams.ExternalEndpoint;
 import org.jclouds.azurecompute.domain.Location;
 import org.jclouds.azurecompute.domain.OSImage;
-import org.jclouds.azurecompute.domain.RoleSize;
-import org.jclouds.azurecompute.domain.Deployment.RoleInstance;
 import org.jclouds.azurecompute.domain.Role;
-import org.jclouds.azurecompute.compute.functions.OSImageToImage;
+import org.jclouds.azurecompute.domain.RoleSize;
 import org.jclouds.azurecompute.options.AzureComputeTemplateOptions;
+import org.jclouds.azurecompute.util.ConflictManagementPredicate;
 import org.jclouds.compute.ComputeServiceAdapter;
 import org.jclouds.compute.domain.OsFamily;
 import org.jclouds.compute.domain.Template;
@@ -59,7 +59,6 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.jclouds.azurecompute.util.ConflictManagementPredicate;
 
 /**
  * Defines the connection between the {@link AzureComputeApi} implementation and the jclouds
@@ -183,7 +182,7 @@ public class AzureComputeServiceAdapter implements ComputeServiceAdapter<Deploym
 
       final Deployment deployment = deployments.iterator().next();
       return new NodeAndInitialCredentials<Deployment>(deployment, name,
-              LoginCredentials.builder().user(loginUser).password(loginPassword).build());
+              LoginCredentials.builder().user(loginUser).password(loginPassword).authenticateSudo(true).build());
    }
 
    public static String generateIllegalStateExceptionMessage(final String operationId, final long timeout) {
