@@ -33,7 +33,7 @@ public final class DeploymentParamsToXML implements Binder {
       DeploymentParams params = DeploymentParams.class.cast(input);
 
       try {
-         XMLBuilder builder = XMLBuilder.create("Deployment", "http://schemas.microsoft.com/windowsazure")
+         XMLBuilder builder = XMLBuilder.create("Deployment", "http://schemas.microsoft.com/windowsazure").ns("xmlns:i", "http://www.w3.org/2001/XMLSchema-instance")
                  .e("Name").t(params.name()).up()
                  .e("DeploymentSlot").t("Production").up()
                  .e("Label").t(params.name()).up()
@@ -44,27 +44,17 @@ public final class DeploymentParamsToXML implements Binder {
                  .e("ConfigurationSets");
 
          if (params.os() == OSImage.Type.WINDOWS) {
-            XMLBuilder configBuilder = builder.e("ConfigurationSet"); // Windows
+            XMLBuilder configBuilder = builder.e("ConfigurationSet").attr("i:type", "WindowsProvisioningConfigurationSet"); // Windows
             configBuilder.e("ConfigurationSetType").t("WindowsProvisioningConfiguration").up()
                     .e("ComputerName").t(params.name()).up()
                     .e("AdminPassword").t(params.password()).up()
                     .e("ResetPasswordOnFirstLogon").t("false").up()
                     .e("EnableAutomaticUpdate").t("false").up()
-                    .e("DomainJoin")
-                    .e("Credentials")
-                    .e("Domain").t(params.name()).up()
-                    .e("Username").t(params.username()).up()
-                    .e("Password").t(params.password()).up()
-                    .up() // Credentials
-                    .e("JoinDomain").t(params.name()).up()
-                    .up() // Domain Join
-                    .e("StoredCertificateSettings").up()
                     .e("WinRM")
                     .e("Listeners")
                     .e("Listener")
-                    .e("Protocol").t("http").up().up().up().up()
+                    .e("Protocol").t("Http").up().up().up().up()
                     .e("AdminUsername").t(params.username()).up()
-                    .e("AdminPassword").t(params.username()).up()
                     .up(); // Windows ConfigurationSet
          } else if (params.os() == OSImage.Type.LINUX) {
             XMLBuilder configBuilder = builder.e("ConfigurationSet"); // Linux

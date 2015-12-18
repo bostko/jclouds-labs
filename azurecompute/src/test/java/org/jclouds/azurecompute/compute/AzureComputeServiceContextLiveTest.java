@@ -55,7 +55,8 @@ public class AzureComputeServiceContextLiveTest extends BaseComputeServiceContex
 
    @Test
    public void testWindowsNode() throws RunNodesException {
-      final String groupName = String.format("win-%s", System.getProperty("user.name"));
+      final String usr = System.getProperty("user.name");
+      final String groupName = String.format("win-%s", usr.length() > 8 ? usr.substring(0, 7) : usr);
 
       final TemplateBuilder templateBuilder = view.getComputeService().templateBuilder();
       //templateBuilder.imageId("3a50f22b388a4ff7ab41029918570fa6__Windows-Server-2012-Essentials-20141204-enus");
